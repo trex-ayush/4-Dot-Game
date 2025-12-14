@@ -8,14 +8,10 @@ exports.getLeaderboard = async (req, res, next) => {
     const sortOptions = {};
     sortOptions[sortBy] = -1;
 
-    // Exclude BOT users from leaderboard
+    // Exclude BOT users from leaderboard (usernames are stored in lowercase)
     const leaderboard = await User.find({ 
       gamesPlayed: { $gt: 0 },
-      username: { $ne: 'bot' }, // Exclude 'bot'
-      $and: [
-        { username: { $not: /^BOT$/i } }, // Exclude 'BOT' (case insensitive)
-        { username: { $not: /BOT_/i } }   // Exclude any BOT_ prefixed names
-      ]
+      username: { $ne: 'bot' }
     })
       .sort(sortOptions)
       .limit(parseInt(limit))
@@ -76,11 +72,7 @@ exports.getPlayerRank = async (req, res, next) => {
     // Count players with more wins (excluding BOT)
     const playersAbove = await User.countDocuments({
       wins: { $gt: user.wins },
-      username: { $ne: 'bot' },
-      $and: [
-        { username: { $not: /^BOT$/i } },
-        { username: { $not: /BOT_/i } }
-      ]
+      username: { $ne: 'bot' }
     });
 
     res.json({

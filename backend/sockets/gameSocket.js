@@ -301,9 +301,10 @@ const initializeGameSocket = (io) => {
     });
 
     // LEAVE QUEUE
-    socket.on('leave_queue', ({ username }) => {
-      const normalizedUsername = username ? username.toLowerCase().trim() : socketToUser.get(socket.id);
-      if (normalizedUsername) {
+    socket.on('leave_queue', (data) => {
+      const username = data?.username || socketToUser.get(socket.id);
+      if (username) {
+        const normalizedUsername = username.toLowerCase().trim();
         matchmakingService.removeFromQueue(normalizedUsername);
         socket.emit('left_queue');
       }
@@ -344,9 +345,12 @@ const initializeGameSocket = (io) => {
 
       // Check if game is over
       if (result.gameOver) {
+        // Set result on game object before saving
+        game.result = result.result;
+        
         // Save game to database
         try {
-          await gameController.saveCompletedGame(game);
+          await gameController.saveCompletedGame(game, result);
         } catch (error) {
           console.error('Error saving game:', error);
         }
@@ -400,9 +404,12 @@ const initializeGameSocket = (io) => {
             if (forfeitResult) {
               const game = matchmakingService.getGame(gameId);
               if (game) {
+                // Set result on game object before saving
+                game.result = 'forfeit';
+                
                 // Save game to database
                 try {
-                  await gameController.saveCompletedGame(game);
+                  await gameController.saveCompletedGame(game, { result: 'forfeit' });
                 } catch (error) {
                   console.error('Error saving forfeited game:', error);
                 }

@@ -100,10 +100,13 @@ class MatchmakingService {
           });
           
           if (result.gameOver) {
+            // Set result on game object before saving
+            game.result = result.result;
+            
             // Save game to database
             const gameController = require('../controllers/gameController');
             try {
-              await gameController.saveCompletedGame(game);
+              await gameController.saveCompletedGame(game, result);
             } catch (error) {
               console.error('Error saving timeout game:', error);
             }
@@ -152,10 +155,13 @@ class MatchmakingService {
         });
         
         if (result.gameOver) {
+          // Set result on game object before saving
+          game.result = result.result;
+          
           // Save game to database
           const gameController = require('../controllers/gameController');
           try {
-            await gameController.saveCompletedGame(game);
+            await gameController.saveCompletedGame(game, result);
           } catch (error) {
             console.error('Error saving bot game:', error);
           }

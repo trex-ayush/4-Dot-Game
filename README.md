@@ -24,8 +24,8 @@ Before you begin, ensure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
-cd "game app - Copy"
+git clone https://github.com/trex-ayush/4-Dot-Game.git
+cd "4-Dot-Game"
 ```
 
 ### 2. Backend Setup
@@ -263,10 +263,6 @@ GET /api/game/history/:username
    - `VITE_SOCKET_URL` - Your deployed backend WebSocket URL
 2. Build and deploy the frontend
 3. Update backend `CLIENT_URL` to match frontend URL
-
-## 📄 License
-
-This project is open source and available under the MIT License.
 
 ## 🤝 Contributing
 

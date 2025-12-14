@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  @apply bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 min-h-screen text-white;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105;
+  }
+
+  .card {
+    @apply bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6 shadow-xl;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-500;
+}
+
+/* Cell hover effect */
+.cell-hover {
+  @apply transition-all duration-200 cursor-pointer;
+}
+
+.cell-hover:hover {
+  @apply transform scale-105 brightness-110;
+}
+
+/* Disc animations */
+.disc-player1 {
+  @apply bg-gradient-to-br from-red-400 to-red-600 shadow-lg shadow-red-500/50;
+}
+
+.disc-player2 {
+  @apply bg-gradient-to-br from-yellow-400 to-yellow-600 shadow-lg shadow-yellow-500/50;
+}
+
+.disc-empty {
+  @apply bg-slate-900/50;
+}
+
+/* Winner animation */
+@keyframes winner-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+.winner-cell {
+  animation: winner-pulse 0.6s ease-in-out infinite;
+}
